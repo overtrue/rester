@@ -1,0 +1,19 @@
+{
+    "name": "Inok Media API",
+    "description": "inok media service.",
+    "require": {
+        "slim/slim": "2.*",
+        "illuminate/database": "4.*"
+    },
+    "autoload": {
+        "classmap": [
+            "app/controllers",
+            "app/models",
+            "libraries"
+        ]
+    },
+    "minimum-stability": "stable"
+}
+
+
+
