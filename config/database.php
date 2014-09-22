@@ -8,12 +8,12 @@
 return [
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => '127.0.0.1',
-            'database'  => 'xs',
+            'host'      => 'localhost',
+            'database'  => 'database',
             'username'  => 'root',
-            'password'  => '',
+            'password'  => 'password',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => 'xs_',
+            'prefix'    => '',
         ],
     ];
