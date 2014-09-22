@@ -10,9 +10,9 @@ require __DIR__ . '/helpers.php';
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 define('ROOT_PATH', __DIR__ . '/../');
-define('APP_PATH', __DIR__ . '/../app');
+define('APP_PATH', ROOT_PATH . '/app');
 
-// detect application environment.
+// 获取应用环境名称
 define('_ENV', env());
 
 $config = Config::make(ROOT_PATH . '/config', _ENV);
@@ -30,14 +30,17 @@ $capsule->addConnection($config->get('database.mysql'));
 
 $capsule->setEventDispatcher(new Dispatcher(new Container));
 
-// Set the cache manager instance used by connections... (optional)
+// 模型缓存
 //$capsule->setCacheManager(...);
 
-// Make this Capsule instance available globally via static methods... (optional)
+// 注册全局静态类
 $capsule->setAsGlobal();
 
-// Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
+// 启动 Eloquent ORM...
 $capsule->bootEloquent();
 
+require APP_PATH . '/error.php';
 require APP_PATH . '/routes.php';
+
+return $app;
 

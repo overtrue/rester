@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'local'      => ['overtrue'], // local => your hostname.
+    // 环境名 => [hostname1, hostname2, ...]
+    'local'      => ['overtrue'], 
     'production' => ['*'],
 ];
