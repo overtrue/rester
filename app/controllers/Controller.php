@@ -37,7 +37,7 @@ abstract class Controller
     /**
      * 生成json输出
      *
-     * @return \Phalcon\Http\Response
+     * @return \Slim\Http\Response
      */
     public function json($data)
     {
