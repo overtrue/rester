@@ -1,6 +1,6 @@
 {
-    "name": "Inok Media API",
-    "description": "inok media service.",
+    "name": "Rester",
+    "description": "基于Slim+Eloquent的RESTful API框架.",
     "require": {
         "slim/slim": "2.*",
         "illuminate/database": "4.*"

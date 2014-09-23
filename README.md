@@ -1,4 +1,4 @@
 Rester
 ======
 
-a rest scaffold based on Slim+Eloquent.
+基于Slim+Eloquent的RESTful API框架。
