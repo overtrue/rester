@@ -5,6 +5,7 @@
 
 $app->get('/', 'HomeController:index');
 
+//http://yousite/hello/overtrue
 $app->get('/hello/:username', function($username){
     echo "Hello $username";
 });
