@@ -1,8 +1,12 @@
 <?php
 
+$loader = require __DIR__ . '/../vendor/autoload.php';
+
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Overtrue\Validation\Translator;
+use Overtrue\Validation\Factory as ValidatorFactory;
 
 define('APP_START', microtime(true));
 
@@ -10,18 +14,21 @@ require __DIR__ . '/helpers.php';
 define('ROOT_PATH', __DIR__ . '/../');
 define('APP_PATH', ROOT_PATH . '/app');
 
-$loader = require __DIR__ . '/../vendor/autoload.php';
 
 // 获取应用环境名称
 define('_ENV', env());
 
 $config = Config::make(ROOT_PATH . '/config', _ENV);
+
+//初始化验证类工厂对象
+$validator = new ValidatorFactory(new Translator);
  
 $app = new \Slim\Slim([
     'debug' => $config->get('app.debug'),
 ]);
 
-$app->config = $config;
+$app->config    = $config;
+$app->validator = $validator;
 
 Controller::$app = $app;
 

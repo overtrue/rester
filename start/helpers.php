@@ -25,18 +25,6 @@ function env($test = null)
 }
 
 /**
- * 获取app基础路径
- *
- * @param string $appends 子目录
- *
- * @return string
- */
-function app_path($appends = '')
-{
-    return $appends ? path_join(APP_PATH, $appends) : APP_PATH;
-}
-
-/**
  * 加密字符串
  *
  * @param string $input 

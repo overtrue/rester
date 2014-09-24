@@ -21,9 +21,10 @@ abstract class Controller
             throw new Exception("Error Processing Request", 1);
         }
 
-        $this->request  = self::$app->request();
-        $this->response = self::$app->response();
-        $this->config   = self::$app->config;
+        $this->request   = self::$app->request();
+        $this->response  = self::$app->response();
+        $this->config    = self::$app->config;
+        $this->validator = self::$app->validator;
         $this->init();
     }
 

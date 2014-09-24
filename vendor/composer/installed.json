@@ -371,7 +371,7 @@
         "source": {
             "type": "git",
             "url": "https://github.com/overtrue/validation.git",
-            "reference": "dbd8c6cdd437a1ce91ee228a3b6082f9b1172e7f",
+            "reference": "3ad2f6a0044f2c2d4a72153f4328712438d52654",
             "mirrors": [
                 {
                     "url": "/%package%/%normalizedUrl%.%type%",
@@ -381,8 +381,8 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/overtrue/validation/zipball/dbd8c6cdd437a1ce91ee228a3b6082f9b1172e7f",
-            "reference": "dbd8c6cdd437a1ce91ee228a3b6082f9b1172e7f",
+            "url": "https://api.github.com/repos/overtrue/validation/zipball/3ad2f6a0044f2c2d4a72153f4328712438d52654",
+            "reference": "3ad2f6a0044f2c2d4a72153f4328712438d52654",
             "shasum": "",
             "mirrors": [
                 {
@@ -394,12 +394,12 @@
         "require": {
             "php": ">=5.4.0"
         },
-        "time": "2014-09-23 15:05:04",
+        "time": "2014-09-24 03:42:54",
         "type": "library",
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Overtrue\\": "src/"
+                "Overtrue\\Validation\\": "src/Validation"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -411,6 +411,7 @@
                 "name": "Carlos",
                 "email": "anzhengchao@gmail.com"
             }
-        ]
+        ],
+        "description": "Laralve Validation 简化无依赖版"
     }
 ]

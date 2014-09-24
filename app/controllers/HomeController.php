@@ -12,6 +12,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return $this->json(['app' => 'Rester', 'message' => 'Hello world!']);
+        $rules = [
+            'username' => 'required',
+        ];
+        $validator = $this->validator->make([], $rules);
+        var_dump($validator->passes());
+        var_dump($validator->errors());
+
+        //return $this->json(['app' => 'Rester', 'message' => 'Hello world!']);
     }
 }

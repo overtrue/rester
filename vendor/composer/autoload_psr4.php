@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Overtrue\\' => array($vendorDir . '/overtrue/validation/src'),
+    'Overtrue\\Validation\\' => array($vendorDir . '/overtrue/validation/src/Validation'),
 );
