@@ -266,7 +266,6 @@ class Request
                 $this->env['slim.request.form_hash'] = Util::stripSlashesIfMagicQuotes($_POST);
             }
         }
-
         if ($key) {
             if (isset($this->env['slim.request.form_hash'][$key])) {
                 return $this->env['slim.request.form_hash'][$key];

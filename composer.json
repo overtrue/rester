@@ -3,7 +3,8 @@
     "description": "基于Slim+Eloquent的RESTful API框架.",
     "require": {
         "slim/slim": "2.*",
-        "illuminate/database": "4.*"
+        "illuminate/database": "4.*",
+        "overtrue/validation": "dev-master"
     },
     "autoload": {
         "classmap": [
@@ -14,6 +15,3 @@
     },
     "minimum-stability": "stable"
 }
-
-
-

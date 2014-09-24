@@ -130,6 +130,7 @@ class Router
         $route->setPattern($groupPattern . $route->getPattern());
         $this->routes[] = $route;
 
+
         foreach ($groupMiddleware as $middleware) {
             $route->setMiddleware($middleware);
         }

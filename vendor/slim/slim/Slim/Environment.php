@@ -137,8 +137,8 @@ class Environment implements \ArrayAccess, \IteratorAggregate
             } else {
                 $physicalPath = str_replace('\\', '', dirname($scriptName)); // <-- With rewriting
             }
-            
             $env['SCRIPT_NAME'] = rtrim($physicalPath, '/'); // <-- Remove trailing slashes
+
             // Virtual path
             $env['PATH_INFO'] = substr_replace($requestUri, '', 0, strlen($physicalPath)); // <-- Remove physical path
             $env['PATH_INFO'] = str_replace('?' . $queryString, '', $env['PATH_INFO']); // <-- Remove query string

@@ -106,7 +106,6 @@ class Route
         $this->setPattern($pattern);
         $this->setCallable($callable);
         $this->setConditions(self::getDefaultConditions());
-
         $this->caseSensitive = $caseSensitive;
     }
 
