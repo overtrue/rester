@@ -109,7 +109,7 @@ abstract class Controller
     protected function error($message, $status, $errors = [])
     {
 
-        if (!isset($code, $this->errorCodes)) {
+        if (!isset($status, $this->errorCodes)) {
             throw new Exception("The error code '{$status}' not a valid error code.");
         }
 
