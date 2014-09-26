@@ -166,7 +166,7 @@ abstract class Controller
 
         $this->response->headers->set('content-type', 'application/json');
 
-        is_string($body) || $data = json_encode($data, JSON_UNESCAPED_UNICODE);
+        is_string($body) || $body = json_encode($body, JSON_UNESCAPED_UNICODE);
 
         return $this->response->setBody($body);
     }
