@@ -4,7 +4,7 @@
     "require": {
         "slim/slim": "2.*",
         "illuminate/database": "4.*",
-        "overtrue/validation": "dev-master"
+        "overtrue/validation": "~1.0"
     },
     "autoload": {
         "classmap": [
