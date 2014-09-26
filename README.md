@@ -9,10 +9,14 @@ Rester
 #Usage
 
 ### 安装
+
+请使用composer安装
+
 ```
-git clone --recursive https://github.com/overtrue/rester
+git clone https://github.com/overtrue/rester
+cd rester
+composer install
 ```
-_*请一定要加`--recursive`哦*_, 不然你就需要composer update一下
 
 ### 路由：
 
