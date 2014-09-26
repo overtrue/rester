@@ -69,19 +69,32 @@ abstract class Controller
     /**
      * 生成json输出
      *
-     * @param arrat $data 输出数据
+     * @param arrat $data 输出数据 *
      *
      * @return \Slim\Http\Response
      */
-    protected function json($data)
+    protected function json($data, $status = 200)
     {
-        $this->response->headers->set('content-type', 'application/json');
+        return $this->setJsonResponse($data, $status);
+    }
 
-        if ($this->config->get('app.debug')) {
-            $this->response->headers->set('X-Time-Usage',round(microtime(true) - APP_START, 6));
-        }
-        
-        return $this->response->setBody(json_encode($data, JSON_UNESCAPED_UNICODE));
+    /**
+     * jsonp格式输出
+     *
+     * @param array  $data     输出数据 *
+     * @param string $callback 回调函数 (optional)
+     *
+     * @return \Slim\Http\Response
+     */
+    protected function jsonp($data, $callback = '')
+    {
+        $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+        $callback = $callback ?: $this->request->get('callback');
+
+        $body = $callback ? "{$callback}($json)" : $json;
+
+        return $this->setJsonResponse($body, 200);
     }
 
     /**
@@ -93,20 +106,12 @@ abstract class Controller
      *
      * @return \Slim\Http\Response
      */
-    public function error($message, $code, $errors = [])
+    protected function error($message, $status, $errors = [])
     {
 
         if (!isset($code, $this->errorCodes)) {
             throw new Exception("The error code '{$code}' not a valid error code.");
         }
-
-        if ($this->config->get('app.debug')) {
-            $this->response->headers->set('X-Time-Usage',round(microtime(true) - APP_START, 6));
-        }
-
-        $this->response->setStatus($code);
-
-        $this->response->headers->set('content-type', 'application/json');
 
         $data = [
             'message' => $message,
@@ -114,7 +119,7 @@ abstract class Controller
 
         empty($errors) || $data['errors'] = $errors;
 
-        $this->response->setBody(json_encode($data, JSON_UNESCAPED_UNICODE));
+        $this->setJsonResponse($data, $status);
 
         self::$app->stop();
     }
@@ -122,8 +127,9 @@ abstract class Controller
     /**
      * 验证输入
      *
-     * @param array $input 
-     * @param arrat $rules 
+     * @param array   $input  需要验证的数据 *
+     * @param arrat   $rules  验证规则 * 
+     * @param boolean $return 是否返回验证结果 (optional, 默认: false)
      *
      * @return array If $return is true and validation failed.
      */
@@ -140,5 +146,28 @@ abstract class Controller
         }
 
         return true;
+    }
+
+    /**
+     * 输出json
+     *
+     * @param mixed   $body   内容
+     * @param integer $status 状态码 (optional, 默认:200)
+     *
+     * @return \Slim\Http\Response
+     */
+    protected function setJsonResponse($body, $status = 200)
+    {
+        if ($this->config->get('app.debug')) {
+            $this->response->headers->set('X-Time-Usage',round(microtime(true) - APP_START, 6));
+        }
+
+        $this->response->setStatus($status);
+
+        $this->response->headers->set('content-type', 'application/json');
+
+        is_string($body) || $data = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+        return $this->response->setBody($body);
     }
 }
