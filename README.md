@@ -8,6 +8,12 @@ Rester
 
 #Usage
 
+### 安装
+```
+git clone --recursive https://github.com/overtrue/rester
+```
+_*请一定要加`--recursive`哦*_, 不然你就需要composer update一下
+
 ### 路由：
 
 app/routes.php
