@@ -1,7 +1,10 @@
 Rester
 ======
 
-基于Slim+Eloquent的RESTful API框架。
+基于[Slim](http://www.slimframework.com/) + [Laravel Eloquent](http://laravel.com/docs/4.2/eloquent)的RESTful API框架。
+
+由于Laravel的验证依赖了很多东西，所以我简化了一个版本([validateion](https://github.com/overtrue/rester))，并引用到这个项目中。
+
 
 #Usage
 
