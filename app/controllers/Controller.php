@@ -110,7 +110,7 @@ abstract class Controller
     {
 
         if (!isset($code, $this->errorCodes)) {
-            throw new Exception("The error code '{$code}' not a valid error code.");
+            throw new Exception("The error code '{$status}' not a valid error code.");
         }
 
         $data = [
