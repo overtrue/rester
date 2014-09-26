@@ -20,8 +20,6 @@ $app->get('/', function(){
 或者也可以使用控制器：
 
 ```
-//app/routes.php
-
 $app->get('/', 'HomeController:index'); //调用HomeController的index方法
 
 ```
@@ -44,6 +42,8 @@ class HomeController extends Controller
 
     //...
 }
+
+```
 
 控制器里有用的方法有：
 
