@@ -9,3 +9,9 @@ $app->get('/', 'HomeController:index');
 $app->get('/hello/:username', function($username){
     echo "Hello $username";
 });
+
+//验证demo
+$app->get('/validate', 'HomeController:validateDemo');
+
+//jsonp demo
+$app->get('/jsonp', 'HomeController:jsonpDemo');
