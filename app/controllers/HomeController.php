@@ -15,9 +15,8 @@ class HomeController extends Controller
         $rules = [
             'username' => 'required',
         ];
-        $validator = $this->validator->make([], $rules);
-        var_dump($validator->passes());
-        var_dump($validator->errors());
+        
+        $this->validate($this->request->get(), $rules);
 
         //return $this->json(['app' => 'Rester', 'message' => 'Hello world!']);
     }

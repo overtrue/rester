@@ -12,8 +12,8 @@ $app->error(function (\Exception $e) use ($app) {
         'error'  => $debug ? $e->getMessage() : 'Error Processing Request',
     ];
 
-    if ($app->config->get('app.debug')) {
-        $data['timeusage'] = round(microtime(true) - APP_START, 6);
+    if ($this->config->get('app.debug')) {
+        $this->response->headers->set('X-Time-Usage',round(microtime(true) - APP_START, 6));
     }
     
     $app->response->headers->set('content-type', 'application/json');
