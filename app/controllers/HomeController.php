@@ -53,10 +53,11 @@ class HomeController extends Controller
         $this->validate($this->request->get(), $rules);
 
         $return = [
-            'username' => 'Carlos',
-            'age'      => 24,
-            'location' => 'Beijing, China',
-            'GitHub'   => 'https://github.com/overtrue'
+            'username'     => 'Carlos',
+            'age'          => 24,
+            'location'     => 'Beijing, China',
+            'chinese_name' => '安正超',
+            'github'       => 'https://github.com/overtrue'
         ];
 
         $callback = $this->request->get('callback');
