@@ -5,13 +5,7 @@
 
 $app->get('/', 'HomeController:index');
 
-//http://yousite/hello/overtrue
-$app->get('/hello/:username', function($username){
-    echo "Hello $username";
+$app->group('/api', function() use ($app){
+    $app->get('/articles', 'ArticleController:index');
+    $app->get('/articles/:id', 'ArticleController:show');
 });
-
-//验证demo
-$app->get('/validate', 'HomeController:validateDemo');
-
-//jsonp demo
-$app->get('/jsonp', 'HomeController:jsonpDemo');

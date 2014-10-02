@@ -1,7 +1,7 @@
 <?php
 /**
  * helpers.php
- * 
+ *
  * @author Carlos <anzhengchao@gmail.com>
  * @date   [2014-07-17 15:51]
  */
@@ -12,7 +12,7 @@
  *
  * @return string
  */
-function env($test = null) 
+function env($test = null)
 {
     $envs = include __DIR__ . '/env.php';
     foreach ($envs as $env => $hostnames) {
@@ -27,7 +27,7 @@ function env($test = null)
 /**
  * 加密字符串
  *
- * @param string $input 
+ * @param string $input
  *
  * @return string
  */
@@ -39,7 +39,7 @@ function encrypt($input) {
 /**
  * 解密字符串
  *
- * @param string $input 
+ * @param string $input
  *
  * @return string
  */
@@ -65,69 +65,70 @@ if (!function_exists('nice_time')) {
             return "No date provided";
         }
 
-        
+
         $periods     = array("秒", "分", "小时", "天", "周", "月", "年", "世纪");
         $lengths     = array("60","60","24","7","4.35","12","10");
-        
+
         $now         = time();
         $unix_date   = is_numeric($date) ? $date : strtotime($date);
-        
+
            // check validity of date
-        if(empty($unix_date)) {    
+        if(empty($unix_date)) {
             return "Bad date";
         }
 
         // is it future date or past date
-        if($now > $unix_date + 60) {    
+        if($now > $unix_date + 60) {
             $difference = $now - $unix_date;
             $tense      = "前";
-            
+
         } else {
             $difference = abs($unix_date - $now);
-            
+
             return "刚刚";
         }
-        
+
         for($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
             $difference /= $lengths[$j];
         }
-        
+
         $difference = round($difference);
-        
+
         return "{$difference}{$periods}{$tense}";
     }
 }
 
 if(!function_exists('get_client_ip')){
-    
-    function get_client_ip() 
-    { 
-        $unknown = 'unknown'; 
-        
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) 
 
-            && $_SERVER['HTTP_X_FORWARDED_FOR'] 
+    function get_client_ip()
+    {
+        $unknown = 'unknown';
 
-            && strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], $unknown)) { 
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])
 
-                $ip = $_SERVER['HTTP_X_FORWARDED_FOR']; 
+            && $_SERVER['HTTP_X_FORWARDED_FOR']
 
-        } elseif(isset($_SERVER['REMOTE_ADDR']) 
+            && strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], $unknown)) {
 
-                && $_SERVER['REMOTE_ADDR'] 
+                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
-                && strcasecmp($_SERVER['REMOTE_ADDR'], $unknown)) { 
+        } elseif(isset($_SERVER['REMOTE_ADDR'])
 
-                $ip = $_SERVER['REMOTE_ADDR']; 
-            } 
+                && $_SERVER['REMOTE_ADDR']
+
+                && strcasecmp($_SERVER['REMOTE_ADDR'], $unknown)) {
+
+                $ip = $_SERVER['REMOTE_ADDR'];
+            }
 
         if (false !== strpos($ip, ','))
-        { 
+        {
             $ip = reset(explode(',', $ip));
-        } 
-        return ip2long($ip); 
+        }
+        return ip2long($ip);
     }
 }
+
 
 if(!function_exists('get_first_charter'))
 {

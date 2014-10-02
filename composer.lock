@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5eb258954f4b0a64c86b7e1fe6fa8c13",
+    "hash": "15aaec7dbf941a375f93a540c1af8894",
     "packages": [
         {
             "name": "illuminate/container",
@@ -245,11 +245,11 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "cde7a00d1410a17fb6d61b993cb017a78be1137c",
+                "reference": "5cb6e71055f7b0b57956b73d324cc4de31278f42",
                 "mirrors": [
                     {
                         "url": "/%package%/%normalizedUrl%.%type%",
@@ -259,8 +259,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/cde7a00d1410a17fb6d61b993cb017a78be1137c",
-                "reference": "cde7a00d1410a17fb6d61b993cb017a78be1137c",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/5cb6e71055f7b0b57956b73d324cc4de31278f42",
+                "reference": "5cb6e71055f7b0b57956b73d324cc4de31278f42",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -281,7 +281,7 @@
                     "Carbon": "src"
                 }
             },
-            "notification-url": "/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -299,15 +299,15 @@
                 "datetime",
                 "time"
             ],
-            "time": "2014-09-10 03:26:33"
+            "time": "2014-09-26 02:52:02"
         },
         {
             "name": "overtrue/validation",
-            "version": "dev-master",
+            "version": "1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/validation.git",
-                "reference": "3ad2f6a0044f2c2d4a72153f4328712438d52654",
+                "reference": "f7bf3fd0559e73ffead3c8eec4581a83eced8e69",
                 "mirrors": [
                     {
                         "url": "/%package%/%normalizedUrl%.%type%",
@@ -317,8 +317,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/overtrue/validation/zipball/3ad2f6a0044f2c2d4a72153f4328712438d52654",
-                "reference": "3ad2f6a0044f2c2d4a72153f4328712438d52654",
+                "url": "https://api.github.com/repos/overtrue/validation/zipball/f7bf3fd0559e73ffead3c8eec4581a83eced8e69",
+                "reference": "f7bf3fd0559e73ffead3c8eec4581a83eced8e69",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -347,7 +347,7 @@
                 }
             ],
             "description": "Laralve Validation 简化无依赖版",
-            "time": "2014-09-24 03:42:54"
+            "time": "2014-09-24 03:54:47"
         },
         {
             "name": "slim/slim",
@@ -411,9 +411,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "overtrue/validation": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "platform": [],
     "platform-dev": []

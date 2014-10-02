@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller.php
- * 
+ *
  * @author Carlos <anzhengchao@gmail.com>
  * @date   2014-08-13T12:11:19
  */
@@ -9,7 +9,7 @@
 /**
  * 基础控制器
  */
-abstract class Controller 
+abstract class Controller
 {
     /**
      * 输出对象
@@ -62,7 +62,7 @@ abstract class Controller
     /**
      * 初始调用方法
      *
-     * @return 
+     * @return
      */
     public function init(){}
 
@@ -128,7 +128,7 @@ abstract class Controller
      * 验证输入
      *
      * @param array   $input  需要验证的数据 *
-     * @param arrat   $rules  验证规则 * 
+     * @param arrat   $rules  验证规则 *
      * @param boolean $return 是否返回验证结果 (optional, 默认: false)
      *
      * @return array If $return is true and validation failed.

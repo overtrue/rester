@@ -22,7 +22,7 @@ $config = Config::make(ROOT_PATH . '/config', _ENV);
 
 //初始化验证类工厂对象
 $validator = new ValidatorFactory(new Translator);
- 
+
 $app = new \Slim\Slim([
     'debug' => $config->get('app.debug'),
 ]);
@@ -33,6 +33,7 @@ $app->validator = $validator;
 Controller::$app = $app;
 
 $capsule = new Capsule;
+
 $capsule->addConnection($config->get('database.mysql'));
 
 $capsule->setEventDispatcher(new Dispatcher(new Container));
