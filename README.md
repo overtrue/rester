@@ -12,7 +12,7 @@ Rester
 
 请使用composer安装
 
-```
+```shell
 git clone https://github.com/overtrue/rester
 cd rester
 composer install
@@ -24,7 +24,7 @@ composer install
 
 app/routes.php
 
-```
+```php
 <?php
 
 $app->get('/', function(){
@@ -34,7 +34,7 @@ $app->get('/', function(){
 ```
 或者也可以使用控制器：
 
-```
+```php
 $app->get('/', 'HomeController:index'); //调用HomeController的index方法
 
 ```
@@ -43,7 +43,7 @@ _更多路由的使用请阅读Slim官方文档：http://docs.slimframework.com/
 
 ### 控制器
 
-```
+```php
 <?php
 
 /**
