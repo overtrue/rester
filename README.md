@@ -18,6 +18,8 @@ cd rester
 composer install
 ```
 
+虚拟机配置文件 [vhost](/vhost)
+
 ### 路由：
 
 app/routes.php
