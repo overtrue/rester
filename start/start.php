@@ -38,11 +38,16 @@ $capsule->addConnection($config->get('database.mysql'));
 
 $capsule->setEventDispatcher(new Dispatcher(new Container));
 
+
 // 模型缓存
 //$capsule->setCacheManager(...);
 
 // 注册全局静态类
 $capsule->setAsGlobal();
+
+Capsule::setPaginator(function() use ($app) {
+    return new Paginator($app->request);
+});
 
 // 启动 Eloquent ORM...
 $capsule->bootEloquent();
