@@ -5,7 +5,19 @@
 
 $app->get('/', 'HomeController:index');
 
-$app->group('/api', function() use ($app){
-    $app->get('/articles', 'ArticleController:index');
-    $app->get('/articles/:id', 'ArticleController:show');
+$app->group('/users', function() {
+    return array(
+            array(
+                'username' => 'Carlos',
+                'nickname' => 'overtrue',
+                'email'    => 'anzhengchao@gmail.com',
+            ),
+
+            array(
+                'username' => 'SomeBody',
+                'nickname' => 'sbdy',
+                'email'    => 'sbdy@sb.com',
+            ),
+
+           );
 });

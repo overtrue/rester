@@ -10,6 +10,7 @@ use Overtrue\Validation\Factory as ValidatorFactory;
 
 define('APP_START', microtime(true));
 
+// 助手函数
 require __DIR__ . '/helpers.php';
 define('ROOT_PATH', __DIR__ . '/../');
 define('APP_PATH', ROOT_PATH . '/app');
@@ -45,8 +46,9 @@ $capsule->setEventDispatcher(new Dispatcher(new Container));
 // 注册全局静态类
 $capsule->setAsGlobal();
 
-Capsule::setPaginator(function() use ($app) {
-    return new Paginator($app->request);
+// 注册分页类
+Capsule::setPaginator(function() use ($app, $config) {
+    return new Paginator($app->request, $config->get('pager', 'page'));
 });
 
 // 启动 Eloquent ORM...
