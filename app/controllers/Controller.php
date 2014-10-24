@@ -48,9 +48,7 @@ abstract class Controller
      */
     final function __construct()
     {
-        if (is_null(self::$app)) {
-            throw new Exception("Error Processing Request", 1);
-        }
+        self::$app || self::$app = \Slim\Slim::getInstance();
 
         $this->request   = self::$app->request();
         $this->response  = self::$app->response();
@@ -65,37 +63,6 @@ abstract class Controller
      * @return
      */
     public function init(){}
-
-    /**
-     * 生成json输出
-     *
-     * @param arrat $data 输出数据 *
-     *
-     * @return \Slim\Http\Response
-     */
-    protected function json($data, $status = 200)
-    {
-        return $this->setJsonResponse($data, $status);
-    }
-
-    /**
-     * jsonp格式输出
-     *
-     * @param array  $data     输出数据 *
-     * @param string $callback 回调函数 (optional)
-     *
-     * @return \Slim\Http\Response
-     */
-    protected function jsonp($data, $callback = '')
-    {
-        $json = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-        $callback = $callback ?: $this->request->get('callback');
-
-        $body = $callback ? "{$callback}($json)" : $json;
-
-        return $this->setJsonResponse($body, 200);
-    }
 
     /**
      * 错误输出

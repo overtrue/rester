@@ -11,6 +11,7 @@
         "classmap": [
             "app/controllers",
             "app/models",
+            "app/middlewares",
             "libraries"
         ]
     },
