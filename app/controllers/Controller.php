@@ -48,9 +48,7 @@ abstract class Controller
      */
     final function __construct()
     {
-        if (is_null(self::$app)) {
-            throw new Exception("Error Processing Request", 1);
-        }
+        self::$app || self::$app = \Slim\Slim::getInstance();
 
         $this->request   = self::$app->request();
         $this->response  = self::$app->response();

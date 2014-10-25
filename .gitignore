@@ -1,3 +1,7 @@
 composer.lock
 vendor/*
-*DS_Store
+.DS_Store
+app/controllers
+app/models
+!app/controllers/Controller.php
+!app/models/Model.php
