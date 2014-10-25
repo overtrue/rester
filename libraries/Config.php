@@ -1,7 +1,12 @@
 <?php
+
+namespace Rester;
+
+use ArrayAccess;
+
 /**
  * Config.php
- * 
+ *
  * @author Carlos <anzhengchao@gmail.com>
  * @date   [2014-09-17 15:55]
  */
@@ -39,7 +44,7 @@ class Config implements ArrayAccess
      *
      * @param string $path 配置文件路径
      * @param string $env  运行环境名称
-     * 
+     *
      */
     public function __construct($path, $env)
     {

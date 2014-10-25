@@ -5,11 +5,13 @@ require __DIR__ . '/helpers.php';
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
+use Slim\Slim;
+use Rester\Config;
+use Rester\Paginator;
 use Overtrue\Validation\Translator;
 use Overtrue\Validation\Factory as ValidatorFactory;
 
 define('APP_START', microtime(true));
-
 define('ROOT_PATH', __DIR__ . '/../');
 define('APP_PATH', ROOT_PATH . '/app');
 
@@ -39,7 +41,5 @@ require APP_PATH . '/middlewares.php';
 
 // 包含用户路由
 require APP_PATH . '/routes.php';
-
-
 
 return $app;

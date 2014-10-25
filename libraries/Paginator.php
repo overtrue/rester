@@ -1,4 +1,7 @@
 <?php
+
+namespace Rester;
+
 /**
  * Paginator.php
  *
