@@ -6,18 +6,18 @@
  * - 简单输出
  * - 输入验证
  * - jsonp输出
- *
+ * 
  */
 class HomeController extends Controller
 {
     /**
-     * demo
+     * demo 
      *
      * @return Slim\Http\Response
      */
     public function index()
     {
-        return ['app' => 'Rester', 'message' => 'Hello world!'];
+        return $this->json(['app' => 'Rester', 'message' => 'Hello world!']);
     }
 
     /**
@@ -32,11 +32,11 @@ class HomeController extends Controller
             'password' => 'required|confirmed',
             'sex'      => 'integer|in:1,0',
         ];
-
+        
         $this->validate($this->request->post(), $rules);
 
         //以下是验证通过的情况下
-        return ['status' => 'validation passes.'];
+        return $this->json(['status' => 'validation passes.']);
     }
 
     /**

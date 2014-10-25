@@ -2,7 +2,6 @@
     "name": "Rester",
     "description": "基于Slim+Eloquent的RESTful API框架.",
     "require": {
-        "php": ">=5.3",
         "slim/slim": "2.*",
         "illuminate/database": "4.*",
         "overtrue/validation": "1.0"
@@ -11,7 +10,6 @@
         "classmap": [
             "app/controllers",
             "app/models",
-            "app/middlewares",
             "libraries"
         ]
     },

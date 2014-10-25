@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
+
 class User extends Model
 {
-    protected $table      = 'system_users';
-    protected $primaryKey = 'uid';
-    protected $fillable   = ['*'];
-    public $timestamps    = false;
+    protected $table    = 'user';
+    protected $fillable = ['*'];
+    public $timestamps  = false;
 
 }
