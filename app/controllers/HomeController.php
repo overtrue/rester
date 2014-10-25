@@ -6,18 +6,18 @@
  * - 简单输出
  * - 输入验证
  * - jsonp输出
- * 
+ *
  */
 class HomeController extends Controller
 {
     /**
-     * demo 
+     * demo
      *
      * @return Slim\Http\Response
      */
     public function index()
     {
-        return $this->json(['app' => 'Rester', 'message' => 'Hello world!']);
+        return json(['app' => 'Rester', 'message' => 'Hello world!']);
     }
 
     /**
@@ -32,11 +32,11 @@ class HomeController extends Controller
             'password' => 'required|confirmed',
             'sex'      => 'integer|in:1,0',
         ];
-        
-        $this->validate($this->request->post(), $rules);
+
+        validate($this->request->post(), $rules);
 
         //以下是验证通过的情况下
-        return $this->json(['status' => 'validation passes.']);
+        return json(['status' => 'validation passes.']);
     }
 
     /**
@@ -50,7 +50,7 @@ class HomeController extends Controller
             'callback' => 'required',
         ];
 
-        $this->validate($this->request->get(), $rules);
+        validate($this->request->get(), $rules);
 
         $return = [
             'username'     => 'Carlos',
@@ -62,6 +62,6 @@ class HomeController extends Controller
 
         $callback = $this->request->get('callback');
 
-        return $this->jsonp($return, $callback);//callbak是可选的，如果不传，默认从GET取callback
+        return jsonp($return, $callback);//callbak是可选的，如果不传，默认从GET取callback
     }
 }

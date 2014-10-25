@@ -6,6 +6,18 @@
 $app->get('/', 'HomeController:index');
 
 $app->group('/api', function() use ($app){
-    $app->get('/articles', 'ArticleController:index');
-    $app->get('/articles/:id', 'ArticleController:show');
+    //user
+    $app->get('/users',              'UserController:index');
+    $app->get('/users/:user_id',          'UserController:show');
+    $app->get('/users/:user_id/articles', 'ArticleController:index');
+
+    //article
+    $app->get('/articles',                                  'ArticleController:index');
+    $app->get('/articles/:article_id',                      'ArticleController:show');
+    $app->get('/articles/:article_id/chapters',             'ChapterController:index');
+    $app->get('/articles/:article_id/chapters/:chapter_id', 'ChapterController:show');
+
+    //chapter
+    $app->get('/chapters',              'ChapterController:index');
+    $app->get('/chapters/:chapter_id',  'ChapterController:show');
 });

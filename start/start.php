@@ -1,5 +1,8 @@
 <?php
 
+// 助手函数
+require __DIR__ . '/helpers.php';
+
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 use Overtrue\Validation\Translator;
@@ -7,11 +10,8 @@ use Overtrue\Validation\Factory as ValidatorFactory;
 
 define('APP_START', microtime(true));
 
-// 助手函数
-require __DIR__ . '/helpers.php';
 define('ROOT_PATH', __DIR__ . '/../');
 define('APP_PATH', ROOT_PATH . '/app');
-
 
 // 获取应用环境名称
 define('_ENV', env());

@@ -25,6 +25,16 @@ function env($test = null)
 }
 
 /**
+ * 获取App实例
+ *
+ * @return \Slim\Slim
+ */
+function app()
+{
+    return \Slim\Slim::getInstance();
+}
+
+/**
  * 加密字符串
  *
  * @param string $input
@@ -58,46 +68,130 @@ function config_path()
     return path_join(APP_PATH, 'config');
 }
 
-if (!function_exists('nice_time')) {
-    function niceTime($date)
-    {
-        if(empty($date)) {
-            return "No date provided";
-        }
-
-
-        $periods     = array("秒", "分", "小时", "天", "周", "月", "年", "世纪");
-        $lengths     = array("60","60","24","7","4.35","12","10");
-
-        $now         = time();
-        $unix_date   = is_numeric($date) ? $date : strtotime($date);
-
-           // check validity of date
-        if(empty($unix_date)) {
-            return "Bad date";
-        }
-
-        // is it future date or past date
-        if($now > $unix_date + 60) {
-            $difference = $now - $unix_date;
-            $tense      = "前";
-
-        } else {
-            $difference = abs($unix_date - $now);
-
-            return "刚刚";
-        }
-
-        for($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
-            $difference /= $lengths[$j];
-        }
-
-        $difference = round($difference);
-
-        return "{$difference}{$periods}{$tense}";
-    }
+/**
+ * 生成json输出
+ *
+ * @param arrat $data 输出数据 *
+ *
+ * @return \Slim\Http\Response
+ */
+function json($data, $status = 200)
+{
+    return setJsonResponse($data, $status);
 }
 
+/**
+ * jsonp格式输出
+ *
+ * @param array  $data     输出数据 *
+ * @param string $callback 回调函数 (optional)
+ *
+ * @return \Slim\Http\Response
+ */
+function jsonp($data, $callback = '')
+{
+    $app = app();
+
+    $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+    $callback = $callback ?: $app->request->get('callback');
+
+    $body = $callback ? "{$callback}($json)" : $json;
+
+    return setJsonResponse($body, 200);
+}
+
+/**
+ * 错误输出
+ *
+ * @param string $message 错误消息 *
+ * @param int    $code    错误码 *
+ * @param array  $errors  错误明细 (optional)
+ *
+ * @return \Slim\Http\Response
+ */
+function error($message, $status, $errors = [])
+{
+    $app = app();
+
+    /**
+     * 允许的错误码
+     *
+     * @var array
+     */
+    $errorCodes = [
+        400 => 'Bad Request',
+        422 => 'Unprocessable Entity',
+    ];
+
+    if (!isset($status, $errorCodes)) {
+        throw new Exception("The error code '{$status}' not a valid error code.");
+    }
+
+    $data = [
+        'message' => $message,
+    ];
+
+    empty($errors) || $data['errors'] = $errors;
+
+    setJsonResponse($data, $status);
+
+    self::$app->stop();
+}
+
+/**
+ * 验证输入
+ *
+ * @param array   $input  需要验证的数据 *
+ * @param arrat   $rules  验证规则 *
+ * @param boolean $return 是否返回验证结果 (optional, 默认: false)
+ *
+ * @return array If $return is true and validation failed.
+ */
+function validate($input, $rules, $return = false)
+{
+    $app = app();
+
+    $validator = $app->validator->make($input, $rules);
+
+    if ($validator->fails()) {
+        if ($return) {
+            return $validator->messages->all();
+        }
+
+        $app->error('Validation Failed.', 422, $validator->messages());
+    }
+
+    return true;
+}
+
+/**
+ * 输出json
+ *
+ * @param mixed   $body   内容
+ * @param integer $status 状态码 (optional, 默认:200)
+ *
+ * @return \Slim\Http\Response
+ */
+function setJsonResponse($body, $status = 200)
+{
+    $app = app();
+    if ($app->config->get('app.debug')) {
+        $app->response->headers->set('X-Time-Usage',round(microtime(true) - APP_START, 6));
+    }
+
+    $app->response->setStatus($status);
+
+    $app->response->headers->set('content-type', 'application/json');
+
+    is_string($body) || $body = json_encode($body, JSON_UNESCAPED_UNICODE);
+
+    return $app->response->setBody($body);
+}
+
+/**
+ * 获取客户端IP
+ */
 if(!function_exists('get_client_ip')){
 
     function get_client_ip()
@@ -127,44 +221,4 @@ if(!function_exists('get_client_ip')){
         }
         return ip2long($ip);
     }
-}
-
-
-if(!function_exists('get_first_charter'))
-{
-        function get_first_charter($str) {
-            if (empty($str)) {
-                return '';
-            }
-            $fchar = ord($str{0});
-            if ($fchar >= ord('A') && $fchar <= ord('z')) return strtoupper($str{0});
-            $s1 = iconv('UTF-8', 'gb2312', $str);
-            $s2 = iconv('gb2312', 'UTF-8', $s1);
-            $s = $s2 == $str ? $s1 : $str;
-            $asc = ord($s{0}) * 256 + ord($s{1}) - 65536;
-            if ($asc >= - 20319 && $asc <= - 20284) return 'A';
-            if ($asc >= - 20283 && $asc <= - 19776) return 'B';
-            if ($asc >= - 19775 && $asc <= - 19219) return 'C';
-            if ($asc >= - 19218 && $asc <= - 18711) return 'D';
-            if ($asc >= - 18710 && $asc <= - 18527) return 'E';
-            if ($asc >= - 18526 && $asc <= - 18240) return 'F';
-            if ($asc >= - 18239 && $asc <= - 17923) return 'G';
-            if ($asc >= - 17922 && $asc <= - 17418) return 'H';
-            if ($asc >= - 17417 && $asc <= - 16475) return 'J';
-            if ($asc >= - 16474 && $asc <= - 16213) return 'K';
-            if ($asc >= - 16212 && $asc <= - 15641) return 'L';
-            if ($asc >= - 15640 && $asc <= - 15166) return 'M';
-            if ($asc >= - 15165 && $asc <= - 14923) return 'N';
-            if ($asc >= - 14922 && $asc <= - 14915) return 'O';
-            if ($asc >= - 14914 && $asc <= - 14631) return 'P';
-            if ($asc >= - 14630 && $asc <= - 14150) return 'Q';
-            if ($asc >= - 14149 && $asc <= - 14091) return 'R';
-            if ($asc >= - 14090 && $asc <= - 13319) return 'S';
-            if ($asc >= - 13318 && $asc <= - 12839) return 'T';
-            if ($asc >= - 12838 && $asc <= - 12557) return 'W';
-            if ($asc >= - 12556 && $asc <= - 11848) return 'X';
-            if ($asc >= - 11847 && $asc <= - 11056) return 'Y';
-            if ($asc >= - 11055 && $asc <= - 10247) return 'Z';
-            return null;
-        }
 }
