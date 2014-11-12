@@ -16,12 +16,25 @@ namespace Rester;
  * @date   2014-10-23T20:05:33
  */
 
-class Paginator
+use Closure;
+use Countable;
+use ArrayAccess;
+use Serializable;
+use ArrayIterator;
+use JsonSerializable;
+use IteratorAggregate;
+
+class Paginator implements
+    ArrayAccess,
+    Countable,
+    IteratorAggregate,
+    Serializable,
+    JsonSerializable
 {
-    protected $request;
     protected $pager;
     protected $pageSize;
     protected $total;
+    protected $items;
 
     /**
      * Constructor
@@ -29,9 +42,8 @@ class Paginator
      * @param \Slim\Http\Request $request
      * @param string             $pager
      */
-    public function __construct($request, $pager = 'page')
+    public function __construct($pager = 'page')
     {
-        $this->request = $request;
         $this->pager = $pager;
     }
 
@@ -48,27 +60,30 @@ class Paginator
     {
         $this->total    = abs($total);
         $this->pageSize = $pageSize;
+        $this->items = $items;
 
-        return $items;
+        return $this;
     }
 
     /**
      * Return current page
      *
-     * @param integer $total
-     *
      * @return integer
      */
-    public function getCurrentPage($total = 1)
+    public function getCurrentPage($total = null)
     {
-        $page = abs($this->request->get('page', 1));
-        $this->total = $total;
+        $page = abs(app()->request->get('page', 1));
 
-        $totalPage = $this->getTotalPage();
+        if ($total) {
+            $this->total = $total;
+        }
 
         $page >= 1 || $page = 1;
 
-        $page <= $totalPage || $page = $totalPage;
+        if ($this->items) {
+            $totalPage = $this->getTotalPage();
+            $page <= $totalPage || $page = $totalPage;
+        }
 
         return $page;
     }
@@ -87,5 +102,173 @@ class Paginator
         $totalPage >= 1 || $totalPage = 1;
 
         return $totalPage;
+    }
+
+    public function links()
+    {
+        $html = '<ul class="pagination">';
+
+        $totalPage   = $this->getTotalPage();
+        $currentPage = $this->getCurrentPage();
+
+        if ($totalPage < 10) {
+            for ($i = 1; $i <= $totalPage; $i++) {
+                $active = $i == $currentPage ? 'class="active"':'';
+                $html .= "<li $active><a href=".$this->getLink($i).">$i</a></li>";
+            }
+        } else {
+            for ($i = $currentPage - 4; $i <= $currentPage; $i++) {
+                $active = $i == $currentPage ? 'class="active"':'';
+                $html .= "<li $active><a href=".$this->getLink($i).">$i</a></li>";
+            }
+
+            if ($totalPage - $currentPage >= 5) {
+                $html .= "<li><a href='javascript:void(0)'>...</a></li>";
+
+                for ($i = $currentPage + 1; $i <= $totalPage; $i++) {
+                    $html .= "<li><a href=".$this->getLink($i).">$i</a></li>";
+                }
+            }
+        }
+
+        return $html .= '</ul>';
+    }
+
+    /**
+     * getLink
+     *
+     * @param integer $page
+     *
+     * @return string
+     */
+    public function getLink($page)
+    {
+        static $query;
+
+        if (is_null($query)) {
+            $query = app()->request->get();
+        }
+
+        $query['page'] = $page;
+
+        return "?" . http_build_query($query);
+    }
+
+     /** {@inhertDoc} */
+    public function jsonSerialize()
+    {
+        return $this->items;
+    }
+
+    /** {@inhertDoc} */
+    public function serialize()
+    {
+        return serialize($this->items);
+    }
+    /** {@inhertDoc} */
+    public function unserialize($data)
+    {
+        return $this->items = unserialize($data);
+    }
+    /** {@inhertDoc} **/
+    public function getIterator()
+    {
+        return new ArrayIterator($this->items);
+    }
+    /** {@inhertDoc} */
+    public function count($mode = COUNT_NORMAL)
+    {
+        return count($this->items, $mode);
+    }
+    /**
+     * Get a data by key
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function __get($key) {
+        return $this[$key];
+    }
+    /**
+     * Assigns a value to the specified data
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        $this->items[$key] = $value;
+    }
+    /**
+     * Whether or not an data exists by key
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return isset($this->items[$key]);
+    }
+    /**
+     * Unsets an data by key
+     *
+     * @param string $key
+     */
+    public function __unset($key)
+    {
+        unset($this->items[$key]);
+    }
+    /**
+     * Assigns a value to the specified offset
+     *
+     * @param string $offset
+     * @param mixed  $value
+     *
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->items[$offset] = $value;
+    }
+    /**
+     * Whether or not an offset exists
+     *
+     * @param string $offset
+     *
+     * @access public
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->items[$offset]);
+    }
+    /**
+     * Unsets an offset
+     *
+     * @param string $offset
+     *
+     * @return array
+     */
+    public function offsetUnset($offset)
+    {
+        if ($this->offsetExists($offset)) {
+            unset($this->items[$offset]);
+        }
+    }
+    /**
+     * Returns the value at specified offset
+     *
+     * @param string $offset
+     *
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->offsetExists($offset) ? array_get($this->items, $offset) : null;
     }
 }
