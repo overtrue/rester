@@ -117,17 +117,27 @@ class Paginator implements
                 $html .= "<li $active><a href=".$this->getLink($i).">$i</a></li>";
             }
         } else {
-            for ($i = $currentPage - 4; $i <= $currentPage; $i++) {
+
+            if ($currentPage > 3) {
+                $html .= "<li><a href=".$this->getLink(1).">&laquo;</a></li>";
+                $start = $currentPage - 2;
+            } else {
+                $start = 1;
+            }
+
+            for ($i = $start; $i <= $currentPage; $i++) {
+                $active = $i == $currentPage ? 'class="active"':'';
+                $html .= "<li $active><a href=".$this->getLink($i).">$i</a></li>";
+            }
+
+            for ($i = $currentPage + 1; $i <= $currentPage + 3; $i++) {
                 $active = $i == $currentPage ? 'class="active"':'';
                 $html .= "<li $active><a href=".$this->getLink($i).">$i</a></li>";
             }
 
             if ($totalPage - $currentPage >= 5) {
                 $html .= "<li><a href='javascript:void(0)'>...</a></li>";
-
-                for ($i = $currentPage + 1; $i <= $totalPage; $i++) {
-                    $html .= "<li><a href=".$this->getLink($i).">$i</a></li>";
-                }
+                $html .= "<li><a href=".$this->getLink($totalPage).">$totalPage</a></li>";
             }
         }
 
