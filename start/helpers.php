@@ -6,6 +6,29 @@
  * @date   [2014-07-17 15:51]
  */
 
+/**
+ * 生成url
+ *
+ * @param string $target
+ *
+ * @return string
+ */
+function urlto($target)
+{
+    return cfg('app.base_url', '/') . ltrim($target, '/');
+}
+
+/**
+ * 静态资源
+ *
+ * @param string $target
+ *
+ * @return string
+ */
+function assets($target)
+{
+    return urlto('/assets/') . ltrim($target, '/');
+}
 
 /**
  * 获取应用运行环境
@@ -32,6 +55,103 @@ function env($test = null)
 function app()
 {
     return \Slim\Slim::getInstance();
+}
+
+
+/**
+ * 读取配置文件
+ *
+ * @param string $key
+ * @param string $default
+ *
+ * @return mixed
+ */
+function cfg($key, $default = null)
+{
+    return app()->config->get($key, $default);
+}
+
+
+/**
+ * 获取当前输入
+ *
+ * @param string $key
+ * @param mixed $default
+ *
+ * @return mixed
+ */
+function input($key, $default = null)
+{
+    return array_get(app()->request()->params(), $key, $default);
+}
+
+/**
+ * 获取上一次输入
+ *
+ * @param string $key
+ * @param mixed $default
+ *
+ * @return mixed
+ */
+function old($key, $default = null)
+{
+    if (empty($_SESSION['slim.flash'])) {
+        return $default;
+    }
+
+    return array_get($_SESSION['slim.flash'], "__old_input.$key", $default);
+}
+
+/**
+ * 获取来源页链接
+ *
+ * @param string $default
+ *
+ * @return string
+ */
+function back($default = null)
+{
+    if (!empty($_SERVER['HTTP_REFERER'])) {
+        return $_SERVER['HTTP_REFERER'];
+    }
+
+    if (empty($_SESSION['slim.flash'])) {
+        return $default;
+    }
+
+    return array_get($_SESSION['slim.flash'], "last_url", $default);
+}
+
+/**
+ * 包含模板
+ *
+ * @param string $alias
+ *
+ * @return string
+ */
+function partial($alias, $data = array())
+{
+    $template = str_finish(app()->config('templates.path'), '/') . view_file($alias);
+
+    extract(array_merge(app()->view->getData(), $data));
+
+    return include $template;
+}
+
+/**
+ * 生成视图
+ *
+ * @param string $alias
+ *
+ * @return string
+ */
+function view_file($alias)
+{
+    if (stripos($alias, '.php') > 0) {
+        $alias = substr($alias, 0, -4);
+    }
+
+    return str_replace('.', DIRECTORY_SEPARATOR, trim($alias, DIRECTORY_SEPARATOR)) . '.php';
 }
 
 /**

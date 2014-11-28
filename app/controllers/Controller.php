@@ -53,4 +53,37 @@ abstract class Controller
      * @return void
      */
     public function init(){}
+
+    /**
+     * 输出模板
+     *
+     * @return Slim\View
+     */
+    public function view()
+    {
+        return call_user_func_array(array(self::$app, 'render'), func_get_args());
+    }
+
+     /**
+     * 创建验证对象
+     *
+     * @param array $input
+     * @param array $rules
+     *
+     * @return Validator
+     */
+    public function validate($input, $rules)
+    {
+        return $this->validator->make($input, $rules);
+    }
+
+    /**
+     * 跳转
+     *
+     * @return Slim\Http\Response
+     */
+    public function redirect()
+    {
+        return call_user_func_array(array($this->response, 'redirect'), func_get_args());
+    }
 }

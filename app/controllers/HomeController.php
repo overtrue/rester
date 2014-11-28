@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return json(['app' => 'Rester', 'message' => 'Hello world!']);
+        return $this->view('index');
     }
 
     /**

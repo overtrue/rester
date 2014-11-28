@@ -24,7 +24,8 @@ $config = Config::make(ROOT_PATH . '/config', _ENV);
 $validator = new ValidatorFactory(new Translator);
 
 $app = new \Slim\Slim([
-    'debug' => $config->get('app.debug'),
+    'debug'          => $config->get('app.debug'),
+    'templates.path' => APP_PATH . '/views'
 ]);
 
 $app->config    = $config;
