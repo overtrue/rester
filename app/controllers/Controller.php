@@ -61,7 +61,8 @@ abstract class Controller
      */
     public function view()
     {
-        return call_user_func_array(array(self::$app, 'render'), func_get_args());
+
+        return call_user_func_array('view', func_get_args());
     }
 
      /**

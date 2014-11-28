@@ -71,6 +71,20 @@ function cfg($key, $default = null)
     return app()->config->get($key, $default);
 }
 
+/**
+ * 返回视图
+ *
+ * @return string
+ */
+function view()
+{
+    $args = func_get_args();
+    if (!empty($args[0])) {
+        $args[0] = view_file($args[0]);
+    }
+
+    return call_user_func_array(array(app(), 'render'), $args);
+}
 
 /**
  * 获取当前输入
