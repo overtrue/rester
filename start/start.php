@@ -31,8 +31,11 @@ $app = new \Slim\Slim([
 $app->config    = $config;
 $app->validator = $validator;
 
+
 // 初始化Eloquent
-require __DIR__ . '/eloquent.php';
+if ($app->config->has('database')) {
+    require __DIR__ . '/eloquent.php';
+}
 
 // 错误处理
 require APP_PATH . '/error.php';
