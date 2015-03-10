@@ -2,7 +2,7 @@
 /**
  * database.php
  *
- * @author Carlos <anzhengchao@gmail.com>
+ * @author overtrue <anzhengchao@gmail.com>
  * @date   2014-09-22T22:31:07
  */
 return [
