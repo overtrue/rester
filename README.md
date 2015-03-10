@@ -3,7 +3,7 @@ Rester
 
 基于 [Slim](http://www.slimframework.com/) + [Laravel Eloquent](http://laravel.com/docs/4.2/eloquent) 的 RESTful API 框架。
 
-由于 Laravel 的验证依赖了很多 Symfony 的组件，所以我简化了一个版本 ([validation](https://github.com/overtrue/validation))，并引用到这个项目中。
+由于 Laravel 的验证依赖了很多 Symfony 的组件，所以我简化了一个版本 （[validation](https://github.com/overtrue/validation)），并引用到这个项目中。
 
 
 # Usage
